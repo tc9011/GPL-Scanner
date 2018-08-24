@@ -55,7 +55,7 @@ function readFile(filedir) {
   fs.createReadStream(filedir, {encoding: 'utf8'})
     .on('data', (chunk) => data += chunk)
     .on('end', () => {
-      if (data.match(/GNU|GENERAL|GPL/i)) {     // 是否存在GNU|GENERAL|GPL的字段
+      if (data.match(/\bGNU\b|\bGPL\b/i)) {     // 是否存在GNU|GPL的字段
         console.log('find GPL in ' + filedir);
         writeFile(filedir);
       }
