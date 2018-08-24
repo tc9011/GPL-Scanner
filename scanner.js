@@ -8,7 +8,7 @@ const filePath = path.resolve('./node_modules');
 let results = '';
 
 // 白名单
-let whiteList = ['validate-npm-package-license', 'spdx-license-ids', 'spdx-expression-parse', 'license-webpack-plugin', 'LICENSE-W3C'];
+const whiteList = ['validate-npm-package-license', 'spdx-license-ids', 'spdx-expression-parse', 'license-webpack-plugin', 'LICENSE-W3C'];
 
 // 白名单的正则表达式
 const whiteListRegexp = new RegExp(regexp());
