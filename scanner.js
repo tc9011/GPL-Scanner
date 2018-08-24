@@ -38,6 +38,10 @@ function fileDisplay(filePath) {
 }
 
 function checkFiles(filedir) {
+  if (filedir.match(/\bvalidate-npm-package-license\b|\bspdx-license-ids\b|\bspdx-expression-parse\b/)) {   // 排除特殊文件
+    return;
+  }
+
   if (filedir.match(/license/i)) {    // 匹配license文件
     console.log('find license in the path：' + filedir);
     readFile(filedir);
@@ -52,10 +56,18 @@ function checkFiles(filedir) {
 
 function readFile(filedir) {
   let data = '';
+  let isIncludeLicense = false;
   fs.createReadStream(filedir, {encoding: 'utf8'})
-    .on('data', (chunk) => data += chunk)
+    .on('data', (chunk) => {
+      if (chunk.match(/license/i)) {
+        isIncludeLicense = true;
+      }
+      if (isIncludeLicense) {   // 只分析出现license后面的文字
+        data += chunk;
+      }
+    })
     .on('end', () => {
-      if (data.match(/\bGNU\b|\bGPL\b/i)) {     // 是否存在GNU|GPL的字段
+      if (data.match(/\bGNU General Public License\b|\bGPL\b|\bLGPL\b/i)) {     // 是否存在GNU|GPL的字段
         console.log('find GPL in ' + filedir);
         writeFile(filedir);
       }
