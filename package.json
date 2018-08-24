@@ -2,7 +2,7 @@
   "name": "scanner",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon scanner.js"
   },
   "dependencies": {},
   "devDependencies": {
