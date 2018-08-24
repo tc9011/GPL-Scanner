@@ -24,7 +24,7 @@ function fileDisplay(filePath) {
             const isFile = stats.isFile();//是文件
             const isDir = stats.isDirectory();//是文件夹
             if (isFile) {
-              console.log(filedir);
+              checkFiles(filedir);
             }
             if (isDir) {
               fileDisplay(filedir);//递归，如果是文件夹，就继续遍历该文件夹下面的文件
@@ -36,6 +36,16 @@ function fileDisplay(filePath) {
   });
 }
 
-function checkFiles(fileDir) {
-  
+function checkFiles(filedir) {
+
+  if (filedir.match(/license/i)) {
+    console.log('匹配路径：' + filedir);
+
+  } else if (filedir.match(/package\.json/i)) {
+    console.log('匹配路径：' + filedir);
+  } else if (filedir.match(/readme/i)) {
+    console.log('匹配路径：' + filedir)
+  } else {
+    console.log(filedir);
+  }
 }
