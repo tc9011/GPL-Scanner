@@ -87,13 +87,13 @@ function readFile(filedir) {
     .on('end', () => {
       if (data.match(/\bGNU General Public License\b|\bGPL\b|\bLGPL\b/i)) {     // 是否存在GNU|GPL的字段
         console.log('find GPL in ' + filedir);
-        writeFile(filedir);
+        results += `find a package with GPL license  in ${filedir}\n`;
+        writeFile();
       }
     });
 }
 
-function writeFile(filedir) {
-  results += `find a package with GPL license  in ${filedir}\n`;
+function writeFile() {
   const ws = fs.createWriteStream('results.txt');
   ws.write(results);
   ws.end();
