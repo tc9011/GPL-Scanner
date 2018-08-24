@@ -7,6 +7,12 @@ const filePath = path.resolve('./node_modules');
 // 存储扫描结果
 let results = '';
 
+// 白名单
+let whiteList = ['validate-npm-package-license', 'spdx-license-ids', 'spdx-expression-parse', 'license-webpack-plugin'];
+
+// 白名单的正则表达式
+const whiteListRegexp = new RegExp(regexp());
+
 fs.stat('results.txt', function(err, stat){
   // results.txt文件是否存在
   if(stat&&stat.isFile()) {
@@ -56,7 +62,8 @@ function fileDisplay(filePath) {
 }
 
 function checkFiles(filedir) {
-  if (filedir.match(/\bvalidate-npm-package-license\b|\bspdx-license-ids\b|\bspdx-expression-parse\b/)) {   // 排除特殊文件
+
+  if (filedir.match(whiteListRegexp)) {   // 排除特殊文件
     return;
   }
 
@@ -70,6 +77,18 @@ function checkFiles(filedir) {
     console.log('find readme in the path：' + filedir);
     readFile(filedir);
   }
+}
+
+// 用白名单组正则表达式
+function regexp() {
+  let regexp = '';
+  whiteList.forEach((item, index) => {
+    regexp += `\\b${item}\\b`;
+    if (index < whiteList.length - 1) {
+      regexp += '|';
+    }
+  });
+  return regexp;
 }
 
 function readFile(filedir) {
